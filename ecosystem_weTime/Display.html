@@ -1,0 +1,57 @@
+<DOCTYPE html>
+<html lang="en-US">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<link href="Css/image.css" rel="stylesheet" type="text/css" />
+	<script type="js/grid.js"></script>
+    <body bgcolor="#E6E6FA">
+	<!---navigation pills-->
+<div id="menu">
+     <ul class="nav nav-pills">
+  <li class="active"><a href="Display.html">Gallery</a></li>
+   <li><a href="home.html">Home</a></li>
+   <li><a href="map.html">Map</a></li>
+ </ul>
+</div>
+ 
+<body ng-app="myApp" style="width:100%">
+    <div id="wrapper">
+    	<div class="w3-content w3-section" style="max-width:500px">
+     </div>
+<div ng-controller="myCtrl">
+    	<div class="container content-sm">
+			<div class="headline-center margin-bottom-60">
+                <h2>Going down memory lane </h2>
+    <div class="img" ng-repeat="post in Instagram">
+  <a target="_blank" href="{{post.images.standard_resolution.url}}">
+      <h4>"{{post.location.name}}"</h4>
+    <img src="{{post.images.standard_resolution.url}}" width="300" height="200">
+  </a>
+  <div class="desc">"{{post.caption.text}}"</div>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+    
+<script>
+    	var app = angular.module('myApp', []);
+	    app.controller('myCtrl', function($scope, $http) {
+		 var url ="https://api.instagram.com/v1/users/self/media/recent/?access_token=276072369.1677ed0.0fc757946b45400da3db42f5264d55b6"
+			$http({
+				method: 'JSONP',
+				url,
+				params : {callback : 'JSON_CALLBACK'}
+			})
+			.then(function(response) {
+			console.log(response.data.data);	
+			$scope.Instagram = response.data.data;
+        
+    			});
+		
+	});
+    </script> 
+     </body>
+   </html>
+
